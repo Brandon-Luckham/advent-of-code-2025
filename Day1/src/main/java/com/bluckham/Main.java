@@ -27,11 +27,17 @@ public class Main {
             var amount = Integer.parseInt(line.substring(1)) % END;
             var direction = line.toCharArray()[0];
             if (direction == 'L') {
+                // if current - amount < 0 count++ and current = END - Math.abs(current - amount)
+                // if current == 0 count++ and current = START
+                    
                 if (currentPosition - amount <= START)
                     currentPosition = (END + (currentPosition - amount)) % END;
                 else
                     currentPosition -= amount;
             } else if (direction == 'R') {
+                // if current + amount > 99 count++ and current = START + ((current + amount) % END)
+                // if current == END count++ and current = END
+                
                 if (currentPosition + amount >= END)
                     currentPosition = (currentPosition + amount) % END;
                 else
