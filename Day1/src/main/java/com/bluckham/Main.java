@@ -18,7 +18,7 @@ public class Main {
                 list.add(line);
             }
         } catch (IOException e) {
-            e.printStackTrace();
+            System.err.println("Unable to parse file");
         }
 
         var count = 0;
