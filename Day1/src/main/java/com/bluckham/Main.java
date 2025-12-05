@@ -24,27 +24,30 @@ public class Main {
         var count = 0;
         var currentPosition = INITIAL_POS;
         for (var line : list) {
+            var loops = Integer.parseInt(line.substring(1)) / END;
             var amount = Integer.parseInt(line.substring(1)) % END;
             var direction = line.toCharArray()[0];
             if (direction == 'L') {
-                // if current - amount < 0 count++ and current = END - Math.abs(current - amount)
-                // if current == 0 count++ and current = START
-                    
-                if (currentPosition - amount <= START)
-                    currentPosition = (END + (currentPosition - amount)) % END;
+                if (currentPosition - amount < START) {
+                    if (currentPosition != START)
+                        count++;
+                    currentPosition = (END - Math.abs(currentPosition - amount));
+                } else if (currentPosition - amount == START)
+                    currentPosition = START;
                 else
                     currentPosition -= amount;
             } else if (direction == 'R') {
-                // if current + amount > 99 count++ and current = START + ((current + amount) % END)
-                // if current == END count++ and current = END
-                
-                if (currentPosition + amount >= END)
+                if (currentPosition + amount > END) {
                     currentPosition = (currentPosition + amount) % END;
+                    count++;
+                } else if (currentPosition + amount == END)
+                    currentPosition =(currentPosition + amount) % END;
                 else
                     currentPosition += amount;
             }
             if (currentPosition == 0)
                 count++;
+            count += loops;
         }
         System.out.println(count);
     }
