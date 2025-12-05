@@ -1,18 +1,18 @@
 package com.bluckham;
 
 import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Main {
     static void main() {
         final var INITIAL_POS = 50;
         final var START = 0;
         final var END = 100;
-        var filePath = "C:/Users/bluck/IdeaProjects/advent-of-code-2025/Day1/src/main/resources/Day1.txt";
         var list = new ArrayList<String>();
-        try (var reader = new BufferedReader(new FileReader(filePath))) {
+        try (var reader = new BufferedReader(new InputStreamReader(Objects.requireNonNull(Main.class.getClassLoader().getResourceAsStream("Day1.txt"))))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 list.add(line);
