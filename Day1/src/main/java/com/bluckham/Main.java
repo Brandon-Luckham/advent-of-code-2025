@@ -1,17 +1,45 @@
 package com.bluckham;
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.util.ArrayList;
+
 public class Main {
     static void main() {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        IO.println(String.format("Hello and welcome!"));
-
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            IO.println("i = " + i);
+        final var INITIAL_POS = 50;
+        final var START = 0;
+        final var END = 100;
+        var filePath = "C:/Users/bluck/IdeaProjects/advent-of-code-2025/Day1/src/main/resources/Day1.txt";
+        var list = new ArrayList<String>();
+        try (var reader = new BufferedReader(new FileReader(filePath))) {
+            String line;
+            while ((line = reader.readLine()) != null) {
+                list.add(line);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
         }
+
+        var count = 0;
+        var currentPosition = INITIAL_POS;
+        for (var line : list) {
+            var amount = Integer.parseInt(line.substring(1)) % END;
+            var direction = line.toCharArray()[0];
+            if (direction == 'L') {
+                if (currentPosition - amount <= START)
+                    currentPosition = (END + (currentPosition - amount)) % END;
+                else
+                    currentPosition -= amount;
+            } else if (direction == 'R') {
+                if (currentPosition + amount >= END)
+                    currentPosition = (currentPosition + amount) % END;
+                else
+                    currentPosition += amount;
+            }
+            if (currentPosition == 0)
+                count++;
+        }
+        System.out.println(count);
     }
 }
